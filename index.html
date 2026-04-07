@@ -3,425 +3,346 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Awesomemarkings</title>
+    <title>Awesomemarkings — Email Marketing & Automation Platform</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Space+Grotesk:wght@500;600;700&display=swap');
-
-        :root {
-            --neon-blue: #00f0ff;
-            --neon-purple: #c026d3;
-            --neon-pink: #f472b6;
-        }
-
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap');
+        
         body {
-            margin: 0;
-            font-family: 'Inter', sans-serif;
-            background: #0a0a1f;
-            color: white;
-            overflow-x: hidden;
+            font-family: 'Inter', system_ui, sans-serif;
         }
-
-        .bg-anime {
-            position: fixed;
-            inset: 0;
-            z-index: -2;
-            background: linear-gradient(135deg, #1e0b4b 0%, #0a0a1f 50%, #4c1d95 100%);
-            background-size: 400% 400%;
-            animation: cosmicShift 25s ease infinite;
-        }
-
-        @keyframes cosmicShift {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        #particles { position: fixed; inset: 0; z-index: -1; pointer-events: none; }
-
-        .title {
+        
+        .heading-font {
             font-family: 'Space Grotesk', sans-serif;
-            font-size: clamp(3.5rem, 8vw, 7rem);
-            font-weight: 700;
-            background: linear-gradient(90deg, #00f0ff, #c026d3, #f472b6, #22c55e);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-shadow: 0 0 40px #00f0ff, 0 0 80px #c026d3, 0 0 120px #f472b6;
-            animation: titlePulse 4s ease-in-out infinite;
         }
 
-        @keyframes titlePulse {
-            0%, 100% { filter: brightness(1) hue-rotate(0deg); }
-            50% { filter: brightness(1.3) hue-rotate(15deg); }
+        .hero-bg {
+            background: linear-gradient(135deg, #0f172a 0%, #1e2937 100%);
         }
 
-        .subtitle { animation: subtitleFloat 6s ease-in-out infinite; }
-
-        @keyframes subtitleFloat {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-15px); }
+        .nav-link {
+            transition: all 0.3s ease;
+        }
+        
+        .nav-link:hover {
+            color: #3b82f6;
         }
 
-        .energy-card {
-            position: relative;
-            overflow: hidden;
-            background: rgba(15, 23, 42, 0.7);
-            backdrop-filter: blur(16px);
+        .feature-card {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
         }
 
-        .energy-card::before {
-            content: '';
-            position: absolute;
-            inset: -2px;
-            background: linear-gradient(45deg, transparent, rgba(0, 240, 255, 0.4), transparent);
-            animation: energyScan 6s linear infinite;
+        .cta-button {
+            background: linear-gradient(to right, #3b82f6, #2563eb);
+            transition: all 0.3s ease;
         }
-
-        @keyframes energyScan {
-            0% { transform: translateX(-150%); }
-            100% { transform: translateX(300%); }
-        }
-
-        .feature:hover {
-            transform: translateY(-20px) scale(1.05) rotate(2deg);
-            box-shadow: 0 0 60px -10px rgb(192 38 211);
-        }
-
-        .petal {
-            position: absolute;
-            font-size: 1.8rem;
-            opacity: 0.7;
-            animation: petalFall linear infinite;
-            z-index: -1;
-            text-shadow: 0 0 15px currentColor;
-        }
-
-        @keyframes petalFall {
-            0% { transform: translateY(-100vh) rotate(0deg); }
-            100% { transform: translateY(200vh) rotate(720deg); }
-        }
-
-        .scanline {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%;
-            height: 3px;
-            background: linear-gradient(transparent, rgba(0, 240, 255, 0.6), transparent);
-            box-shadow: 0 0 20px #00f0ff;
-            animation: scan 8s linear infinite;
-            z-index: 10;
-            pointer-events: none;
-        }
-
-        @keyframes scan { 0% { top: -10px; } 100% { top: 100vh; } }
-
-        /* Mini Game Styles */
-        #game-container {
-            background: rgba(0, 0, 0, 0.7);
-            border: 3px solid #00f0ff;
-            box-shadow: 0 0 40px #00f0ff;
+        
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 15px -3px rgb(59 130 246 / 0.3);
         }
     </style>
 </head>
-<body class="min-h-screen relative">
+<body class="bg-white text-slate-900">
 
-    <div class="bg-anime"></div>
-    <canvas id="particles" width="1920" height="1080"></canvas>
-    <div class="scanline"></div>
-
-    <div class="max-w-6xl mx-auto px-6 py-24 relative z-10 text-center">
-        
-        <!-- Title -->
-        <div class="mb-8 flex justify-center">
-            <div class="inline-flex items-center gap-3 px-8 py-4 rounded-3xl bg-white/5 backdrop-blur-xl border border-white/10">
-                <span class="text-5xl">⚡</span>
-                <h1 class="title">AWESOMEMARKINGS</h1>
-            </div>
-        </div>
-
-        <p class="subtitle text-white/90 mb-16 tracking-[6px] font-light text-2xl">
-            NEXT-GEN EMAIL SYSTEMS • HIGH POWERED DELIVERY
-        </p>
-
-        <!-- Hero Card -->
-        <div class="energy-card max-w-2xl mx-auto rounded-3xl p-12 mb-20 shadow-2xl border border-white/20">
-            <div class="mb-6 text-6xl">🚀</div>
-            <h2 class="text-4xl font-bold mb-6 bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
-                Welcome to the Future
-            </h2>
-            <p class="text-xl text-slate-300 leading-relaxed">
-                Building blazing-fast, bulletproof email infrastructure with 
-                <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 to-pink-300">anime-level precision</span>.
-            </p>
-        </div>
-
-        <!-- Features -->
-        <div class="grid md:grid-cols-3 gap-8 mb-24">
-            <div class="feature bg-white/5 backdrop-blur-xl rounded-3xl p-10 border border-white/10 hover:border-cyan-400 group">
-                <div class="text-6xl mb-6 transition-transform group-hover:rotate-12">📡</div>
-                <h3 class="text-2xl font-semibold mb-3">Lightning Infrastructure</h3>
-                <p class="text-slate-400">High-performance servers tested like a shonen protagonist.</p>
-            </div>
-            
-            <div class="feature bg-white/5 backdrop-blur-xl rounded-3xl p-10 border border-white/10 hover:border-purple-400 group">
-                <div class="text-6xl mb-6 transition-transform group-hover:scale-125">🔐</div>
-                <h3 class="text-2xl font-semibold mb-3">Ironclad Authentication</h3>
-                <p class="text-slate-400">SPF • DKIM • DMARC • Maximum deliverability</p>
-            </div>
-            
-            <div class="feature bg-white/5 backdrop-blur-xl rounded-3xl p-10 border border-white/10 hover:border-pink-400 group">
-                <div class="text-6xl mb-6 transition-transform group-hover:rotate-[-12deg]">📈</div>
-                <h3 class="text-2xl font-semibold mb-3">God-Tier Deliverability</h3>
-                <p class="text-slate-400">Landing in inboxes like a perfect Hero landing</p>
-            </div>
-        </div>
-
-        <!-- MINI GAME SECTION -->
-        <div class="mt-20 mb-16">
-            <h2 class="text-5xl font-bold mb-4 bg-gradient-to-r from-pink-400 via-purple-400 to-cyan-400 bg-clip-text text-transparent">
-                MINI GAME: NEON DELIVERER ⚡
-            </h2>
-            <p class="text-slate-400 mb-8">Click the flying emails as fast as you can!<br>Reach 50 deliveries to win the anime trophy 🏆</p>
-
-            <div id="game-container" class="max-w-2xl mx-auto rounded-3xl p-6 relative overflow-hidden">
-                <div class="flex justify-between items-center mb-4 text-sm">
-                    <div>Score: <span id="score" class="font-mono text-cyan-400 text-2xl">0</span></div>
-                    <div>Time: <span id="time" class="font-mono text-pink-400 text-2xl">30</span></div>
-                    <div>Delivered: <span id="delivered" class="font-mono text-green-400 text-2xl">0</span>/50</div>
-                </div>
-
-                <canvas id="game-canvas" width="700" height="380" class="rounded-2xl bg-black/80 mx-auto cursor-crosshair"></canvas>
-
-                <div class="flex justify-center gap-6 mt-6">
-                    <button onclick="startGame()" id="start-btn"
-                            class="px-8 py-3 rounded-2xl bg-gradient-to-r from-cyan-500 to-purple-600 font-bold hover:scale-105 transition">
-                        START GAME
-                    </button>
-                    <button onclick="resetGame()" 
-                            class="px-8 py-3 rounded-2xl border border-white/40 hover:bg-white/10 transition">
-                        RESET
-                    </button>
+    <!-- Navigation -->
+    <nav class="bg-white border-b sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-6 py-5 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="w-9 h-9 bg-blue-600 rounded-2xl flex items-center justify-center text-white font-bold text-2xl">A</div>
+                <div>
+                    <span class="heading-font text-2xl font-semibold tracking-tight">Awesomemarkings</span>
                 </div>
             </div>
+            
+            <div class="hidden md:flex items-center gap-8 text-sm font-medium">
+                <a href="#" class="nav-link">Features</a>
+                <a href="#" class="nav-link">Solutions</a>
+                <a href="#" class="nav-link">Templates</a>
+                <a href="#" class="nav-link">Pricing</a>
+                <a href="#" class="nav-link">Resources</a>
+            </div>
+            
+            <div class="flex items-center gap-4">
+                <a href="#" class="text-sm font-medium px-5 py-2.5 hidden md:block">Log in</a>
+                <a href="#" class="cta-button text-white px-6 py-2.5 rounded-2xl font-semibold text-sm">Start Free Trial</a>
+            </div>
         </div>
+    </nav>
 
-        <!-- Contact -->
-        <div class="text-center mt-20">
-            <h2 class="text-3xl font-bold mb-4">Let's Build Something Legendary</h2>
-            <a href="mailto:info@awesomemarkings.com" class="inline-block text-2xl text-cyan-400 hover:text-white transition-colors underline decoration-dashed">
-                info@awesomemarkings.com
-            </a>
+    <!-- Hero Section -->
+    <section class="hero-bg text-white py-24">
+        <div class="max-w-6xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
+            <div>
+                <div class="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md px-4 py-2 rounded-full text-sm mb-6">
+                    <span class="bg-green-400 w-2 h-2 rounded-full animate-pulse"></span>
+                    Now with AI-Powered Campaign Builder
+                </div>
+                
+                <h1 class="heading-font text-6xl md:text-7xl font-semibold leading-tight tracking-tighter mb-6">
+                    Send smarter.<br>Convert better.
+                </h1>
+                
+                <p class="text-xl text-slate-300 max-w-lg mb-10">
+                    The modern email marketing and automation platform trusted by growing brands. 
+                    Beautiful emails, powerful automation, and real results — without the complexity.
+                </p>
+                
+                <div class="flex flex-wrap gap-4">
+                    <a href="#" class="cta-button text-white px-8 py-4 rounded-3xl font-semibold text-lg inline-flex items-center gap-3">
+                        Start your free trial
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+                    <a href="#" class="border border-white/50 hover:bg-white/10 text-white px-8 py-4 rounded-3xl font-medium text-lg transition">
+                        Watch 2-min demo
+                    </a>
+                </div>
+                
+                <div class="mt-12 flex items-center gap-8 text-sm">
+                    <div class="flex -space-x-4">
+                        <div class="w-8 h-8 bg-slate-300 rounded-full border-2 border-slate-900 overflow-hidden">
+                            <img src="https://picsum.photos/id/64/64/64" alt="">
+                        </div>
+                        <div class="w-8 h-8 bg-slate-300 rounded-full border-2 border-slate-900 overflow-hidden">
+                            <img src="https://picsum.photos/id/201/64/64" alt="">
+                        </div>
+                    </div>
+                    <div>
+                        <div class="flex text-yellow-400">★★★★★</div>
+                        <p class="text-slate-400 text-sm">Trusted by 15,000+ growing brands</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="relative">
+                <div class="bg-white/10 backdrop-blur-3xl border border-white/20 rounded-3xl p-3 shadow-2xl">
+                    <img src="https://picsum.photos/id/1015/800/520" alt="Email Campaign Dashboard" 
+                         class="rounded-2xl shadow-xl">
+                </div>
+                <!-- Floating badges -->
+                <div class="absolute -top-6 -right-6 bg-white text-slate-900 px-6 py-3 rounded-2xl shadow-xl flex items-center gap-3">
+                    <div class="text-green-500 text-3xl">↑</div>
+                    <div>
+                        <div class="font-semibold">42% higher open rates</div>
+                        <div class="text-sm text-slate-500">Average with Awesomemarkings</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Trust logos -->
+    <div class="py-8 border-b">
+        <div class="max-w-6xl mx-auto px-6">
+            <p class="text-center text-slate-500 text-sm mb-6">TRUSTED BY TEAMS AT</p>
+            <div class="flex flex-wrap justify-center items-center gap-x-12 gap-y-8 opacity-75">
+                <div class="text-2xl font-bold">Shopify</div>
+                <div class="text-2xl font-bold">WooCommerce</div>
+                <div class="text-2xl font-bold">Stripe</div>
+                <div class="text-2xl font-bold">HubSpot</div>
+                <div class="text-2xl font-bold">Klaviyo</div>
+                <div class="text-2xl font-bold">Mailchimp</div>
+            </div>
         </div>
     </div>
 
-    <!-- Floating Petals -->
-    <script>
-        // === Background Particles & Petals (same as before) ===
-        const canvasBG = document.getElementById('particles');
-        const ctxBG = canvasBG.getContext('2d');
-        function resizeBG() {
-            canvasBG.width = window.innerWidth;
-            canvasBG.height = window.innerHeight;
-        }
-        window.addEventListener('resize', resizeBG);
-        resizeBG();
-
-        let bgParticles = [];
-        class BGParticle {
-            constructor() { this.reset(); }
-            reset() {
-                this.x = Math.random() * canvasBG.width;
-                this.y = Math.random() * canvasBG.height;
-                this.size = Math.random() * 3.5 + 1;
-                this.speed = Math.random() * 0.8 + 0.4;
-                this.opacity = Math.random() * 0.7 + 0.4;
-                this.hue = Math.random() * 60 + 260;
-            }
-            update() {
-                this.y += this.speed;
-                if (this.y > canvasBG.height) this.reset();
-            }
-            draw() {
-                ctxBG.save();
-                ctxBG.globalAlpha = this.opacity;
-                ctxBG.fillStyle = `hsl(${this.hue}, 100%, 85%)`;
-                ctxBG.shadowBlur = 12;
-                ctxBG.shadowColor = `hsl(${this.hue}, 100%, 70%)`;
-                ctxBG.beginPath();
-                ctxBG.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                ctxBG.fill();
-                ctxBG.restore();
-            }
-        }
-
-        for (let i = 0; i < 180; i++) bgParticles.push(new BGParticle());
-
-        function animateBG() {
-            ctxBG.clearRect(0, 0, canvasBG.width, canvasBG.height);
-            bgParticles.forEach(p => { p.update(); p.draw(); });
-            requestAnimationFrame(animateBG);
-        }
-        animateBG();
-
-        function createPetal() {
-            const petal = document.createElement('div');
-            petal.className = 'petal';
-            petal.textContent = ['🌸','✨','⚡','🔮'][Math.floor(Math.random()*4)];
-            petal.style.left = Math.random() * 100 + 'vw';
-            petal.style.animationDuration = (Math.random() * 12 + 15) + 's';
-            petal.style.animationDelay = '-' + Math.random() * 25 + 's';
-            document.body.appendChild(petal);
-            setTimeout(() => petal.remove(), 45000);
-        }
-        setInterval(() => { for(let i=0; i<3; i++) createPetal(); }, 450);
-        for (let i = 0; i < 20; i++) setTimeout(() => createPetal(), i * 100);
-
-        // ==================== MINI GAME ====================
-        const gameCanvas = document.getElementById('game-canvas');
-        const gctx = gameCanvas.getContext('2d');
-        let score = 0;
-        let delivered = 0;
-        let timeLeft = 30;
-        let gameRunning = false;
-        let emails = [];
-        let lastTime = 0;
-
-        class Email {
-            constructor() {
-                this.x = Math.random() * (gameCanvas.width - 60) + 30;
-                this.y = Math.random() * (gameCanvas.height - 80) + 20;
-                this.size = 55;
-                this.speedX = (Math.random() - 0.5) * 3.5;
-                this.speedY = (Math.random() - 0.5) * 3.5;
-                this.emoji = ['📧','📨','✉️'][Math.floor(Math.random()*3)];
-                this.rotation = 0;
-            }
-            update() {
-                this.x += this.speedX;
-                this.y += this.speedY;
-                this.rotation += 0.05;
-
-                // Bounce off walls
-                if (this.x < 30 || this.x > gameCanvas.width - 30) this.speedX *= -1;
-                if (this.y < 30 || this.y > gameCanvas.height - 30) this.speedY *= -1;
-            }
-            draw() {
-                gctx.save();
-                gctx.translate(this.x, this.y);
-                gctx.rotate(this.rotation);
-                gctx.font = '48px Arial';
-                gctx.textAlign = 'center';
-                gctx.textBaseline = 'middle';
-                gctx.shadowColor = '#00f0ff';
-                gctx.shadowBlur = 25;
-                gctx.fillText(this.emoji, 0, 0);
-                gctx.restore();
-            }
-        }
-
-        function spawnEmail() {
-            if (gameRunning && emails.length < 8) {
-                emails.push(new Email());
-            }
-        }
-
-        function drawGame() {
-            gctx.fillStyle = 'rgba(3, 7, 18, 0.85)';
-            gctx.fillRect(0, 0, gameCanvas.width, gameCanvas.height);
-
-            emails.forEach((email, i) => {
-                email.update();
-                email.draw();
-            });
-
-            // Score flash effect
-            if (Math.random() < 0.1) {
-                gctx.fillStyle = 'rgba(255,255,255,0.1)';
-                gctx.fillRect(0, 0, gameCanvas.width, gameCanvas.height);
-            }
-        }
-
-        function gameLoop(timestamp) {
-            if (!lastTime) lastTime = timestamp;
-            if (timestamp - lastTime > 1000) {
-                timeLeft--;
-                document.getElementById('time').textContent = timeLeft;
-                lastTime = timestamp;
-
-                if (timeLeft <= 0) {
-                    endGame();
-                    return;
-                }
-            }
-
-            drawGame();
-            if (gameRunning) requestAnimationFrame(gameLoop);
-        }
-
-        function startGame() {
-            if (gameRunning) return;
-            gameRunning = true;
-            score = 0;
-            delivered = 0;
-            timeLeft = 30;
-            emails = [];
-            document.getElementById('score').textContent = '0';
-            document.getElementById('delivered').textContent = '0';
-            document.getElementById('time').textContent = '30';
-
-            for (let i = 0; i < 5; i++) emails.push(new Email());
+    <!-- Features -->
+    <section class="py-24 bg-slate-50">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <span class="px-4 py-2 bg-blue-100 text-blue-700 rounded-full text-sm font-medium">Powerful Features</span>
+                <h2 class="heading-font text-5xl font-semibold mt-6 mb-4">Everything you need to grow</h2>
+                <p class="max-w-2xl mx-auto text-lg text-slate-600">
+                    From beautiful emails to smart automation — built for speed and results.
+                </p>
+            </div>
             
-            setInterval(spawnEmail, 600);
-            requestAnimationFrame(gameLoop);
-        }
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Feature 1 -->
+                <div class="feature-card bg-white p-8 rounded-3xl border">
+                    <div class="w-12 h-12 bg-blue-100 text-blue-600 rounded-2xl flex items-center justify-center text-3xl mb-6">✉️</div>
+                    <h3 class="text-2xl font-semibold mb-3">Drag & Drop Editor</h3>
+                    <p class="text-slate-600">Create stunning, mobile-responsive emails in minutes with our intuitive builder. No coding required.</p>
+                    <ul class="mt-8 space-y-4 text-sm">
+                        <li class="flex items-center gap-3"><i class="fas fa-check text-green-500"></i> 200+ professional templates</li>
+                        <li class="flex items-center gap-3"><i class="fas fa-check text-green-500"></i> AI copy assistant</li>
+                        <li class="flex items-center gap-3"><i class="fas fa-check text-green-500"></i> Real-time preview</li>
+                    </ul>
+                </div>
+                
+                <!-- Feature 2 -->
+                <div class="feature-card bg-white p-8 rounded-3xl border">
+                    <div class="w-12 h-12 bg-purple-100 text-purple-600 rounded-2xl flex items-center justify-center text-3xl mb-6">⚡</div>
+                    <h3 class="text-2xl font-semibold mb-3">Smart Automation</h3>
+                    <p class="text-slate-600">Build powerful customer journeys with visual automation builder. Welcome flows, abandoned carts, and more.</p>
+                    <ul class="mt-8 space-y-4 text-sm">
+                        <li class="flex items-center gap-3"><i class="fas fa-check text-green-500"></i> Behavioral triggers</li>
+                        <li class="flex items-center gap-3"><i class="fas fa-check text-green-500"></i> Segmentation engine</li>
+                        <li class="flex items-center gap-3"><i class="fas fa-check text-green-500"></i> SMS + Email sync</li>
+                    </ul>
+                </div>
+                
+                <!-- Feature 3 -->
+                <div class="feature-card bg-white p-8 rounded-3xl border">
+                    <div class="w-12 h-12 bg-emerald-100 text-emerald-600 rounded-2xl flex items-center justify-center text-3xl mb-6">📊</div>
+                    <h3 class="text-2xl font-semibold mb-3">Advanced Analytics</h3>
+                    <p class="text-slate-600">Get clear insights into what’s working. Track opens, clicks, revenue, and customer behavior in real time.</p>
+                    <ul class="mt-8 space-y-4 text-sm">
+                        <li class="flex items-center gap-3"><i class="fas fa-check text-green-500"></i> Revenue attribution</li>
+                        <li class="flex items-center gap-3"><i class="fas fa-check text-green-500"></i> A/B testing</li>
+                        <li class="flex items-center gap-3"><i class="fas fa-check text-green-500"></i> Custom reports</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
 
-        function endGame() {
-            gameRunning = false;
-            const finalScore = score;
-            const won = delivered >= 50;
+    <!-- Benefits / Stats -->
+    <section class="py-20">
+        <div class="max-w-6xl mx-auto px-6 grid md:grid-cols-3 gap-10 text-center">
+            <div>
+                <div class="text-6xl font-semibold text-blue-600 mb-2">98%</div>
+                <div class="text-xl font-medium">Deliverability Rate</div>
+                <p class="text-slate-600 mt-3">Emails land in the inbox, not the spam folder</p>
+            </div>
+            <div>
+                <div class="text-6xl font-semibold text-blue-600 mb-2">4.8x</div>
+                <div class="text-xl font-medium">Average ROI</div>
+                <p class="text-slate-600 mt-3">For every $1 spent on Awesomemarkings</p>
+            </div>
+            <div>
+                <div class="text-6xl font-semibold text-blue-600 mb-2">30s</div>
+                <div class="text-xl font-medium">Setup Time</div>
+                <p class="text-slate-600 mt-3">Connect your store and start sending today</p>
+            </div>
+        </div>
+    </section>
 
-            setTimeout(() => {
-                alert(`🎮 GAME OVER!\n\nScore: ${finalScore}\nDelivered: ${delivered}/50\n\n${won ? '🏆 LEGENDARY DELIVERABILITY ACHIEVED!' : 'Keep training, future email ninja!'}`);
-            }, 100);
-        }
+    <!-- Testimonials -->
+    <section class="bg-slate-50 py-24">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="text-center mb-12">
+                <h2 class="heading-font text-4xl font-semibold">Loved by marketing teams</h2>
+            </div>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="bg-white p-8 rounded-3xl">
+                    <div class="flex gap-1 text-amber-400 mb-6">★★★★★</div>
+                    <p class="text-lg italic">"Awesomemarkings helped us increase our email revenue by 340% in just three months. The automation features are game-changing."</p>
+                    <div class="mt-8 flex items-center gap-4">
+                        <div class="w-12 h-12 bg-slate-200 rounded-full"></div>
+                        <div>
+                            <div class="font-medium">Sarah Chen</div>
+                            <div class="text-sm text-slate-500">Head of Marketing, Bloom & Co</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-white p-8 rounded-3xl">
+                    <div class="flex gap-1 text-amber-400 mb-6">★★★★☆</div>
+                    <p class="text-lg italic">"The best email platform we've used. Clean interface, excellent support, and deliverability that actually delivers."</p>
+                    <div class="mt-8 flex items-center gap-4">
+                        <div class="w-12 h-12 bg-slate-200 rounded-full"></div>
+                        <div>
+                            <div class="font-medium">Marcus Okoro</div>
+                            <div class="text-sm text-slate-500">CEO, Urban Threads</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-white p-8 rounded-3xl">
+                    <div class="flex gap-1 text-amber-400 mb-6">★★★★★</div>
+                    <p class="text-lg italic">"Finally an email tool that feels modern. The AI suggestions save us hours every week."</p>
+                    <div class="mt-8 flex items-center gap-4">
+                        <div class="w-12 h-12 bg-slate-200 rounded-full"></div>
+                        <div>
+                            <div class="font-medium">Priya Sharma</div>
+                            <div class="text-sm text-slate-500">Ecommerce Director, Lush Living</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-        function resetGame() {
-            gameRunning = false;
-            emails = [];
-            document.getElementById('score').textContent = '0';
-            document.getElementById('delivered').textContent = '0';
-            document.getElementById('time').textContent = '30';
-        }
+    <!-- Final CTA -->
+    <section class="py-24 bg-slate-900 text-white">
+        <div class="max-w-4xl mx-auto text-center px-6">
+            <h2 class="heading-font text-5xl font-semibold mb-6">Ready to transform your email marketing?</h2>
+            <p class="text-xl text-slate-400 mb-10">Join thousands of brands growing faster with Awesomemarkings. No credit card required.</p>
+            
+            <div class="max-w-md mx-auto">
+                <div class="flex">
+                    <input type="email" placeholder="Enter your work email" 
+                           class="flex-1 px-6 py-4 rounded-l-3xl bg-white/10 border border-white/30 focus:outline-none focus:border-blue-500 text-white placeholder:text-slate-400">
+                    <button onclick="alert('Thank you! Redirecting to signup... (demo)')" 
+                            class="px-10 bg-blue-600 hover:bg-blue-700 font-semibold rounded-r-3xl">
+                        Get Started Free
+                    </button>
+                </div>
+                <p class="text-xs text-slate-500 mt-4">14-day free trial • Cancel anytime</p>
+            </div>
+        </div>
+    </section>
 
-        // Click handler for game
-        gameCanvas.addEventListener('click', (e) => {
-            if (!gameRunning) return;
-            const rect = gameCanvas.getBoundingClientRect();
-            const clickX = e.clientX - rect.left;
-            const clickY = e.clientY - rect.top;
+    <!-- Footer -->
+    <footer class="bg-slate-100 py-16">
+        <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-5 gap-10">
+            <div>
+                <div class="flex items-center gap-3 mb-6">
+                    <div class="w-8 h-8 bg-blue-600 rounded-2xl flex items-center justify-center text-white font-bold">A</div>
+                    <span class="heading-font text-2xl font-semibold">Awesomemarkings</span>
+                </div>
+                <p class="text-slate-600">Modern email marketing that actually works.</p>
+            </div>
+            <div>
+                <div class="font-medium mb-4">Product</div>
+                <div class="space-y-3 text-sm text-slate-600">
+                    <div>Features</div>
+                    <div>Email Builder</div>
+                    <div>Automations</div>
+                    <div>Analytics</div>
+                </div>
+            </div>
+            <div>
+                <div class="font-medium mb-4">Company</div>
+                <div class="space-y-3 text-sm text-slate-600">
+                    <div>About Us</div>
+                    <div>Careers</div>
+                    <div>Blog</div>
+                    <div>Contact</div>
+                </div>
+            </div>
+            <div>
+                <div class="font-medium mb-4">Resources</div>
+                <div class="space-y-3 text-sm text-slate-600">
+                    <div>Help Center</div>
+                    <div>Templates</div>
+                    <div>Integrations</div>
+                    <div>What's New</div>
+                </div>
+            </div>
+            <div>
+                <div class="font-medium mb-4">Legal</div>
+                <div class="space-y-3 text-sm text-slate-600">
+                    <div>Privacy</div>
+                    <div>Terms</div>
+                    <div>Deliverability</div>
+                </div>
+                <div class="mt-10">
+                    <a href="mailto:info@awesomemarkings.com" class="text-blue-600 font-medium">info@awesomemarkings.com</a>
+                </div>
+            </div>
+        </div>
+        <div class="text-center text-slate-500 text-sm mt-16 border-t pt-8">
+            © 2026 Awesomemarkings. All rights reserved.
+        </div>
+    </footer>
 
-            for (let i = emails.length - 1; i >= 0; i--) {
-                const em = emails[i];
-                const dx = clickX - em.x;
-                const dy = clickY - em.y;
-                if (Math.sqrt(dx*dx + dy*dy) < em.size) {
-                    emails.splice(i, 1);
-                    score += 10;
-                    delivered++;
-                    document.getElementById('score').textContent = score;
-                    document.getElementById('delivered').textContent = delivered;
-
-                    // Particle burst effect
-                    for (let j = 0; j < 8; j++) {
-                        emails.push(new Email()); // quick respawn
-                    }
-                    break;
-                }
-            }
-        });
-
-        // Tailwind script already included
-    </script>
 </body>
 </html>
