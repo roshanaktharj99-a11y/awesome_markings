@@ -5,112 +5,90 @@
 <title>Awesomemarkings</title>
 </head>
 
-<body style="margin:0;font-family:Arial, sans-serif;background:#020617;color:white;overflow-x:hidden;">
+<body style="margin:0;font-family: 'Trebuchet MS', sans-serif;background:#0b0b1a;color:white;overflow:hidden;">
 
-<!-- Background Gradient Animation -->
+<!-- Background Glow -->
 <div style="
 position:fixed;
 width:100%;
 height:100%;
-z-index:-1;
-background:linear-gradient(270deg,#0ea5e9,#9333ea,#ec4899,#22c55e);
-background-size:800% 800%;
-animation:gradientMove 15s ease infinite;">
+background:radial-gradient(circle at 30% 40%, rgba(255,0,150,0.4), transparent 40%),
+radial-gradient(circle at 70% 60%, rgba(0,200,255,0.4), transparent 40%),
+#0b0b1a;
+z-index:-1;">
 </div>
 
-<style>
-@keyframes gradientMove {
-  0% {background-position:0% 50%;}
-  50% {background-position:100% 50%;}
-  100% {background-position:0% 50%;}
-}
-@keyframes float {
-  0% {transform:translateY(0px);}
-  50% {transform:translateY(-10px);}
-  100% {transform:translateY(0px);}
-}
-.fade {
-  animation:fadeIn 1.5s ease forwards;
-  opacity:0;
-}
-@keyframes fadeIn {
-  to {opacity:1;}
-}
-</style>
+<!-- Floating particles -->
+<div id="particles"></div>
 
-<!-- Main Container -->
-<div style="max-width:900px;margin:auto;padding:60px 20px;text-align:center;">
+<!-- Main -->
+<div style="height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:20px;">
 
   <!-- Title -->
-  <h1 class="fade" style="font-size:48px;margin-bottom:10px;animation-delay:0.2s;">
+  <h1 style="
+    font-size:60px;
+    background:linear-gradient(90deg,#ff4ecd,#38bdf8,#22c55e);
+    -webkit-background-clip:text;
+    color:transparent;
+    margin:0;
+    letter-spacing:2px;
+  ">
     Awesomemarkings
   </h1>
 
   <!-- Subtitle -->
-  <p class="fade" style="font-size:20px;color:#e2e8f0;animation-delay:0.4s;">
-    Building smart email systems with style ⚡
+  <p style="margin-top:15px;font-size:20px;color:#cbd5f5;">
+    crafting digital signals ⚡
   </p>
 
-  <!-- Floating Card -->
-  <div class="fade" style="
-    margin-top:40px;
-    padding:30px;
-    border-radius:20px;
-    background:rgba(255,255,255,0.05);
-    backdrop-filter:blur(10px);
-    box-shadow:0 10px 30px rgba(0,0,0,0.5);
-    animation:float 4s ease-in-out infinite;
-    animation-delay:0.6s;
-  ">
-    <h2 style="color:#38bdf8;">What’s happening here</h2>
-    <p style="line-height:1.7;color:#cbd5f5;">
-      This domain is currently used for developing and testing modern email delivery systems.
-      Focused on performance, reliability, and clean communication workflows.
-    </p>
-  </div>
+  <!-- Tagline -->
+  <p style="margin-top:25px;max-width:500px;line-height:1.6;color:#94a3b8;">
+    a minimal experimental space focused on building and testing modern communication systems.
+  </p>
 
-  <!-- Features -->
-  <div style="margin-top:50px;display:flex;flex-wrap:wrap;gap:20px;justify-content:center;">
-
-    <div style="flex:1;min-width:200px;padding:20px;border-radius:15px;
-    background:rgba(255,255,255,0.05);backdrop-filter:blur(8px);">
-      📡 <br><br>
-      Email Infrastructure Testing
-    </div>
-
-    <div style="flex:1;min-width:200px;padding:20px;border-radius:15px;
-    background:rgba(255,255,255,0.05);backdrop-filter:blur(8px);">
-      🔐 <br><br>
-      SPF / DKIM / DMARC Setup
-    </div>
-
-    <div style="flex:1;min-width:200px;padding:20px;border-radius:15px;
-    background:rgba(255,255,255,0.05);backdrop-filter:blur(8px);">
-      🚀 <br><br>
-      Deliverability Optimization
-    </div>
-
-  </div>
-
-  <!-- Contact -->
-  <div style="margin-top:60px;">
-    <h2>Contact</h2>
-    <p style="color:#cbd5f5;">info@awesomemarkings.com</p>
+  <!-- Button -->
+  <div style="margin-top:40px;">
+    <a href="mailto:info@awesomemarkings.com" style="
+      text-decoration:none;
+      padding:12px 30px;
+      border-radius:30px;
+      background:linear-gradient(90deg,#ff4ecd,#38bdf8);
+      color:white;
+      font-weight:bold;
+      box-shadow:0 0 20px rgba(255,0,150,0.6);
+    ">
+      Contact
+    </a>
   </div>
 
 </div>
 
-<!-- Scroll Animation Script -->
+<!-- Floating Particles Script -->
 <script>
-const fades = document.querySelectorAll('.fade');
-window.addEventListener('scroll', () => {
-  fades.forEach(el => {
-    const rect = el.getBoundingClientRect();
-    if (rect.top < window.innerHeight - 50) {
-      el.style.opacity = 1;
-    }
-  });
-});
+const container = document.getElementById("particles");
+
+for (let i = 0; i < 40; i++) {
+  let dot = document.createElement("div");
+  dot.style.position = "absolute";
+  dot.style.width = "3px";
+  dot.style.height = "3px";
+  dot.style.background = "white";
+  dot.style.opacity = Math.random();
+  dot.style.top = Math.random() * 100 + "vh";
+  dot.style.left = Math.random() * 100 + "vw";
+  dot.style.borderRadius = "50%";
+  dot.style.animation = "float " + (5 + Math.random()*10) + "s linear infinite";
+  container.appendChild(dot);
+}
+
+const style = document.createElement("style");
+style.innerHTML = `
+@keyframes float {
+  0% { transform: translateY(0px); opacity:0.2; }
+  50% { opacity:1; }
+  100% { transform: translateY(-100vh); opacity:0; }
+}`;
+document.head.appendChild(style);
 </script>
 
 </body>
