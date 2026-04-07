@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Awesome Markings – World News</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f4f4f5; color: #111; min-height: 100vh; }
+
+    header { background: #fff; border-bottom: 1px solid #e4e4e7; padding: 0 24px; display: flex; align-items: center; justify-content: space-between; height: 60px; position: sticky; top: 0; z-index: 10; }
+    .logo { font-size: 20px; font-weight: 700; color: #111; letter-spacing: -0.5px; text-decoration: none; }
+    .logo span { color: #2563eb; }
+    .nav-date { font-size: 13px; color: #71717a; }
+
+    .categories { background: #fff; border-bottom: 1px solid #e4e4e7; padding: 0 24px; display: flex; gap: 4px; overflow-x: auto; scrollbar-width: none; }
+    .categories::-webkit-scrollbar { display: none; }
+    .cat-btn { background: none; border: none; padding: 12px 14px; font-size: 14px; color: #52525b; cursor: pointer; white-space: nowrap; border-bottom: 2px solid transparent; transition: color 0.15s, border-color 0.15s; }
+    .cat-btn:hover { color: #111; }
+    .cat-btn.active { color: #2563eb; border-bottom-color: #2563eb; font-weight: 500; }
+
+    main { max-width: 1100px; margin: 0 auto; padding: 24px 16px; }
+    .section-label { font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: #71717a; margin-bottom: 16px; }
+
+    .hero-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 32px; }
+    @media (max-width: 640px) { .hero-grid { grid-template-columns: 1fr; } }
+
+    .hero-card { background: #fff; border-radius: 12px; border: 1px solid #e4e4e7; overflow: hidden; text-decoration: none; color: inherit; display: block; transition: border-color 0.15s; }
+    .hero-card:hover { border-color: #a1a1aa; }
+    .hero-card.big { grid-row: span 2; display: flex; flex-direction: column; }
+    .hero-img-wrap { width: 100%; aspect-ratio: 16/9; background: #dbeafe; overflow: hidden; }
+    .hero-img-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .card-body { padding: 16px; flex: 1; display: flex; flex-direction: column; gap: 8px; }
+    .card-source { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: #2563eb; }
+    .card-title { font-size: 16px; font-weight: 600; line-height: 1.4; color: #111; }
+    .big .card-title { font-size: 20px; }
+    .card-desc { font-size: 13px; color: #52525b; line-height: 1.6; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+    .card-time { font-size: 12px; color: #a1a1aa; margin-top: auto; }
+
+    .news-list { display: flex; flex-direction: column; gap: 1px; background: #e4e4e7; border: 1px solid #e4e4e7; border-radius: 12px; overflow: hidden; margin-bottom: 32px; }
+    .news-item { background: #fff; padding: 14px 18px; display: flex; gap: 14px; align-items: flex-start; text-decoration: none; color: inherit; transition: background 0.1s; }
+    .news-item:hover { background: #fafafa; }
+    .news-num { font-size: 18px; font-weight: 700; color: #d4d4d8; min-width: 28px; padding-top: 1px; }
+    .news-content { flex: 1; }
+    .news-title { font-size: 14px; font-weight: 500; line-height: 1.4; color: #111; margin-bottom: 4px; }
+    .news-meta { font-size: 12px; color: #a1a1aa; }
+    .news-thumb { width: 72px; height: 52px; border-radius: 8px; object-fit: cover; background: #e4e4e7; flex-shrink: 0; }
+
+    .loading { text-align: center; padding: 60px 0; color: #71717a; font-size: 14px; }
+    .spinner { width: 28px; height: 28px; border: 2px solid #e4e4e7; border-top-color: #2563eb; border-radius: 50%; animation: spin 0.7s linear infinite; margin: 0 auto 12px; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .error-msg { text-align: center; padding: 40px; color: #71717a; font-size: 14px; background: #fff; border-radius: 12px; border: 1px solid #e4e4e7; }
+
+    footer { text-align: center; padding: 24px; font-size: 12px; color: #a1a1aa; border-top: 1px solid #e4e4e7; margin-top: 16px; background: #fff; }
+  </style>
+</head>
+<body>
+
+<header>
+  <a class="logo" href="#">Awesome<span>Markings</span></a>
+  <span class="nav-date" id="header-date"></span>
+</header>
+
+<nav class="categories">
+  <button class="cat-btn active" data-feed="https://feeds.bbci.co.uk/news/world/rss.xml">World</button>
+  <button class="cat-btn" data-feed="https://feeds.bbci.co.uk/news/technology/rss.xml">Technology</button>
+  <button class="cat-btn" data-feed="https://feeds.bbci.co.uk/news/business/rss.xml">Business</button>
+  <button class="cat-btn" data-feed="https://feeds.bbci.co.uk/news/science_and_environment/rss.xml">Science</button>
+  <button class="cat-btn" data-feed="https://feeds.bbci.co.uk/news/health/rss.xml">Health</button>
+  <button class="cat-btn" data-feed="https://feeds.bbci.co.uk/news/entertainment_and_arts/rss.xml">Entertainment</button>
+  <button class="cat-btn" data-feed="https://feeds.bbci.co.uk/news/sport/rss.xml">Sport</button>
+</nav>
+
+<main>
+  <div id="content">
+    <div class="loading"><div class="spinner"></div>Loading latest news…</div>
+  </div>
+</main>
+
+<footer>
+  &copy; <span id="footer-year"></span> AwesomeMarkings.com &nbsp;&middot;&nbsp; News sourced from BBC News
+</footer>
+
+<script>
+  document.getElementById('header-date').textContent = new Date().toLocaleDateString('en-US', {weekday:'long',year:'numeric',month:'long',day:'numeric'});
+  document.getElementById('footer-year').textContent = new Date().getFullYear();
+
+  function timeAgo(dateStr) {
+    const diff = Math.floor((Date.now() - new Date(dateStr)) / 60000);
+    if (diff < 1) return 'just now';
+    if (diff < 60) return diff + 'm ago';
+    if (diff < 1440) return Math.floor(diff / 60) + 'h ago';
+    return Math.floor(diff / 1440) + 'd ago';
+  }
+
+  function getThumb(item) {
+    const media = item.getElementsByTagNameNS('http://search.yahoo.com/mrss/', 'thumbnail')[0];
+    if (media) return media.getAttribute('url') || '';
+    const enc = item.querySelector('enclosure');
+    if (enc && (enc.getAttribute('type') || '').startsWith('image')) return enc.getAttribute('url') || '';
+    return '';
+  }
+
+  function parseXML(xmlText) {
+    const doc = new DOMParser().parseFromString(xmlText, 'text/xml');
+    const feedTitle = doc.querySelector('channel > title')?.textContent || 'BBC News';
+    return [...doc.querySelectorAll('item')].map(item => ({
+      title: item.querySelector('title')?.textContent || '',
+      link: item.querySelector('link')?.nextSibling?.textContent?.trim() || item.querySelector('guid')?.textContent || '#',
+      desc: (item.querySelector('description')?.textContent || '').replace(/<[^>]+>/g, '').trim(),
+      date: item.querySelector('pubDate')?.textContent || '',
+      source: feedTitle,
+      thumb: getThumb(item)
+    }));
+  }
+
+  function render(items) {
+    const el = document.getElementById('content');
+    if (!items.length) { el.innerHTML = '<div class="error-msg">No articles found.</div>'; return; }
+
+    const top = items.slice(0, 5);
+    const rest = items.slice(5, 22);
+    let html = '<p class="section-label">Top stories</p><div class="hero-grid">';
+
+    top.forEach((item, i) => {
+      const imgHtml = item.thumb
+        ? `<div class="hero-img-wrap"><img src="${item.thumb}" alt="" onerror="this.parentElement.remove()"></div>`
+        : '';
+      html += `<a class="hero-card${i===0?' big':''}" href="${item.link}" target="_blank" rel="noopener">
+        ${i===0 ? imgHtml : ''}
+        <div class="card-body">
+          <span class="card-source">${item.source}</span>
+          <div class="card-title">${item.title}</div>
+          ${i===0 && item.desc ? `<div class="card-desc">${item.desc.slice(0,220)}</div>` : ''}
+          <div class="card-time">${timeAgo(item.date)}</div>
+        </div>
+      </a>`;
+    });
+    html += '</div>';
+
+    if (rest.length) {
+      html += '<p class="section-label">More stories</p><div class="news-list">';
+      rest.forEach((item, i) => {
+        html += `<a class="news-item" href="${item.link}" target="_blank" rel="noopener">
+          <span class="news-num">${String(i+1).padStart(2,'0')}</span>
+          <div class="news-content">
+            <div class="news-title">${item.title}</div>
+            <div class="news-meta">${item.source} &middot; ${timeAgo(item.date)}</div>
+          </div>
+          ${item.thumb ? `<img class="news-thumb" src="${item.thumb}" alt="" onerror="this.remove()">` : ''}
+        </a>`;
+      });
+      html += '</div>';
+    }
+
+    el.innerHTML = html;
+  }
+
+  async function loadFeed(feedUrl) {
+    document.getElementById('content').innerHTML = '<div class="loading"><div class="spinner"></div>Loading latest news…</div>';
+    const proxy = 'https://api.allorigins.win/get?url=' + encodeURIComponent(feedUrl);
+    try {
+      const res = await fetch(proxy);
+      if (!res.ok) throw new Error();
+      const { contents } = await res.json();
+      render(parseXML(contents));
+    } catch {
+      document.getElementById('content').innerHTML = `<div class="error-msg">
+        Could not load news right now.<br>
+        <small style="display:block;margin-top:8px;color:#a1a1aa;">Try refreshing or switch to another category.</small>
+      </div>`;
+    }
+  }
+
+  document.querySelectorAll('.cat-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      loadFeed(btn.dataset.feed);
+    });
+  });
+
+  loadFeed(document.querySelector('.cat-btn.active').dataset.feed);
+</script>
+</body>
+</html>
